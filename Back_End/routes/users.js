@@ -3,8 +3,6 @@ const router = express.Router();
 
 const db = require("../config/db");
 
-
-
 router.get("/", (req, res) => {
 
     const sql = `
@@ -12,6 +10,7 @@ router.get("/", (req, res) => {
             id,
             name,
             email,
+            phone,
             bio,
             created_at
         FROM users
@@ -35,7 +34,6 @@ router.get("/", (req, res) => {
 
 });
 
-
 router.get("/:id", (req, res) => {
 
     const userId = req.params.id;
@@ -45,6 +43,7 @@ router.get("/:id", (req, res) => {
             id,
             name,
             email,
+            phone,
             bio,
             created_at
         FROM users
@@ -75,27 +74,24 @@ router.get("/:id", (req, res) => {
 
 });
 
-
-
 router.post("/register", (req, res) => {
-
-   
 
     const {
         name,
         email,
+        phone,
         password,
         bio
     } = req.body;
 
-
     console.log("Name:", name);
     console.log("Email:", email);
+    console.log("Phone:", phone);
 
-    if (!name || !email || !password) {
+    if (!name || !email || !phone || !password) {
 
         return res.status(400).json({
-            message: "Name, email and password are required"
+            message: "Name, email, phone and password are required"
         });
     }
 
@@ -112,18 +108,15 @@ router.post("/register", (req, res) => {
 
             if (err) {
 
-              
                 console.log("Database error");
-                console.log("error code:", err.code);
-                console.log("Erroer message:", err.message);
-               
+                console.log("Error code:", err.code);
+                console.log("Error message:", err.message);
 
                 return res.status(500).json({
                     message: "Registration failed",
                     error: err.message
                 });
             }
-
 
             if (results.length > 0) {
 
@@ -134,28 +127,26 @@ router.post("/register", (req, res) => {
                 });
             }
 
-
-
             const insertSql = `
                 INSERT INTO users
                 (
                     name,
                     email,
+                    phone,
                     password,
                     bio
                 )
-                VALUES (?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?)
             `;
 
-
             console.log("Creating new user...");
-
 
             db.query(
                 insertSql,
                 [
                     name,
                     email,
+                    phone,
                     password,
                     bio || null
                 ],
@@ -163,12 +154,9 @@ router.post("/register", (req, res) => {
 
                     if (err) {
 
-                     
                         console.log("Database error");
-                        console.log("Error code", err.code);
-                        console.log("error mesage:", err.message);
-                        
-                       
+                        console.log("Error code:", err.code);
+                        console.log("Error message:", err.message);
 
                         return res.status(500).json({
                             message: "Registration failed",
@@ -176,11 +164,8 @@ router.post("/register", (req, res) => {
                         });
                     }
 
-
                     console.log("User created successfully!");
                     console.log("New User ID:", result.insertId);
-                  
-
 
                     res.status(201).json({
 
@@ -198,22 +183,15 @@ router.post("/register", (req, res) => {
 
 });
 
-
-
 router.post("/login", (req, res) => {
 
-    
     console.log("Ke jani login korte chay");
-    
-
 
     const {
         email,
         password
     } = req.body;
 
-
-    
     if (!email || !password) {
 
         return res.status(400).json({
@@ -221,18 +199,17 @@ router.post("/login", (req, res) => {
         });
     }
 
-
     const sql = `
         SELECT
             id,
             name,
             email,
+            phone,
             bio
         FROM users
         WHERE email = ?
         AND password = ?
     `;
-
 
     db.query(
         sql,
@@ -244,20 +221,14 @@ router.post("/login", (req, res) => {
 
             if (err) {
 
-                
                 console.log("DB error during login");
                 console.log("Error code is:", err.code);
-              
-                
 
                 return res.status(500).json({
                     message: "Login failed",
                     error: err.message
                 });
             }
-
-
-            
 
             if (results.length === 0) {
 
@@ -268,10 +239,7 @@ router.post("/login", (req, res) => {
                 });
             }
 
-
-
             console.log("Login successful:", email);
-
 
             res.json({
 
@@ -285,7 +253,5 @@ router.post("/login", (req, res) => {
     );
 
 });
-
-
 
 module.exports = router;
