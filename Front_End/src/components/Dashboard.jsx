@@ -24,14 +24,13 @@ function Dashboard({ user, onLogout }) {
             })
             .catch((error) => {
                 console.error("Error fetching skills:", error);
-                setMessage("Could not load available skills.");
                 setMessageType("error");
                 setLoadingSkills(false);
             });
     }, []);
 
     const loadMySkills = async () => {
-        try {
+               try {
             setLoadingMySkills(true);
 
             const response = await fetch(
@@ -121,18 +120,18 @@ function Dashboard({ user, onLogout }) {
             const data = await response.json();
 
             if (response.ok) {
-                setMessage(data.message || "Skill added successfully!");
+                setMessage("Skill added successfully!");
                 setMessageType("success");
 
                 loadMySkills();
                 loadAllUserSkills();
             } else if (response.status === 409) {
                 setMessage(
-                    data.message || "You have already added this skill."
+                    "Tumi to ei skill add korlain ekbar."
                 );
                 setMessageType("warning");
             } else {
-                setMessage(data.message || "Something went wrong.");
+                setMessage("Something went wrong.");
                 setMessageType("error");
             }
         } catch (error) {
@@ -154,18 +153,18 @@ function Dashboard({ user, onLogout }) {
             const data = await response.json();
 
             if (response.ok) {
-                setMessage(data.message || "Skill deleted successfully.");
+                setMessage("Skill deleted successfully.");
                 setMessageType("success");
 
                 loadMySkills();
                 loadAllUserSkills();
             } else {
-                setMessage(data.message || "Failed to delete skill.");
+                setMessage("Tumi eita apatoto delete korte parba na");
                 setMessageType("error");
             }
         } catch (error) {
             console.error("Error deleting skill:", error);
-            setMessage("Could not connect to the backend.");
+            setMessage("Backend ghumay");
             setMessageType("error");
         }
     };
@@ -197,7 +196,7 @@ function Dashboard({ user, onLogout }) {
                         receiver_id: receiverId,
                         skill_id: skillId,
                         message:
-                            "I would like to exchange skills with you."
+                            "Choto amra skill adan prodan kori"
                     })
                 }
             );
@@ -206,7 +205,7 @@ function Dashboard({ user, onLogout }) {
 
             if (response.ok) {
                 setMessage(
-                    data.message || "Swap request sent successfully!"
+                    "Swap request sent successfully!"
                 );
                 setMessageType("success");
 
@@ -225,7 +224,6 @@ function Dashboard({ user, onLogout }) {
             }
         } catch (error) {
             console.error("Error sending swap request:", error);
-            setMessage("Could not connect to the backend.");
             setMessageType("error");
         }
     };
@@ -257,14 +255,13 @@ function Dashboard({ user, onLogout }) {
                 loadSwapRequests();
             } else {
                 setMessage(
-                    data.message ||
+                
                         "Failed to update swap request."
                 );
                 setMessageType("error");
             }
         } catch (error) {
             console.error("Error updating swap request:", error);
-            setMessage("Could not connect to the backend.");
             setMessageType("error");
         }
     };
@@ -340,12 +337,12 @@ function Dashboard({ user, onLogout }) {
 
                     <div className="profile-item">
                         <strong>Phone</strong>
-                        {user.phone || "No phone number added"}
+                        {user.phone || "phone number to add kore nai"}
                     </div>
 
                     <div className="profile-item">
                         <strong>Bio</strong>
-                        {user.bio || "No bio added"}
+                        {user.bio || "bio mio add kore nai oi"}
                     </div>
 
                 </div>
@@ -360,7 +357,7 @@ function Dashboard({ user, onLogout }) {
                     </p>
                 ) : mySkills.length === 0 ? (
                     <p className="empty-message">
-                        You haven't added any skills yet.
+                        Tomar kono skill in nai apatoto
                     </p>
                 ) : (
                     <div className="skills-grid">
@@ -554,7 +551,7 @@ function Dashboard({ user, onLogout }) {
             </div>
 
             <div className="dashboard-section">
-                <h2>📥 Incoming Swap Requests</h2>
+                <h2> Incoming Swap Requests</h2>
 
                 {loadingRequests ? (
                     <p className="empty-message">
@@ -623,7 +620,7 @@ function Dashboard({ user, onLogout }) {
             </div>
 
             <div className="dashboard-section">
-                <h2>📤 Sent Swap Requests</h2>
+                <h2> Sent Swap Requests</h2>
 
                 {loadingRequests ? (
                     <p className="empty-message">
