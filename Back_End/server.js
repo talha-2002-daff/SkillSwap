@@ -40,9 +40,9 @@ app.use("/api/swap-requests", swapRequestsRoutes);
 
 app.listen(5000, () => {
 
-    console.log("---------------------------------");
+    
     console.log("SkillSwap Backend");
     console.log("Server running on port 5000");
-    console.log("---------------------------------");
+   
 
 });

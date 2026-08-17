@@ -30,7 +30,7 @@ function Dashboard({ user, onLogout }) {
     }, []);
 
     const loadMySkills = async () => {
-               try {
+        try {
             setLoadingMySkills(true);
 
             const response = await fetch(
@@ -255,8 +255,7 @@ function Dashboard({ user, onLogout }) {
                 loadSwapRequests();
             } else {
                 setMessage(
-                
-                        "Failed to update swap request."
+                    "Failed to update swap request."
                 );
                 setMessageType("error");
             }
@@ -305,13 +304,6 @@ function Dashboard({ user, onLogout }) {
                     <h1>SkillSwap</h1>
                     <p>Student Skill Exchange Platform</p>
                 </div>
-
-                <button
-                    className="logout-btn"
-                    onClick={onLogout}
-                >
-                    Logout
-                </button>
             </div>
 
             {message && (
@@ -658,6 +650,15 @@ function Dashboard({ user, onLogout }) {
                         </div>
                     ))
                 )}
+            </div>
+
+            <div className="logout-section">
+                <button
+                    className="logout-btn"
+                    onClick={onLogout}
+                >
+                    Logout
+                </button>
             </div>
 
         </div>

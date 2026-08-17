@@ -5,12 +5,7 @@ const db = require("../config/db");
 
 router.post("/", (req, res) => {
 
-    const {
-        sender_id,
-        receiver_id,
-        skill_id,
-        message
-    } = req.body;
+    const { sender_id,receiver_id,skill_id,message } = req.body;
 
     if (!sender_id || !receiver_id || !skill_id) {
 
@@ -22,7 +17,7 @@ router.post("/", (req, res) => {
     if (Number(sender_id) === Number(receiver_id)) {
 
         return res.status(400).json({
-            message: "You cannot send a swap request to yourself"
+            message: "Nijeke nije daw hea?"
         });
     }
 

@@ -4,11 +4,6 @@ const router = express.Router();
 const db = require("../config/db");
 
 
-// ========================================
-// GET ALL SKILLS
-// GET /api/skills
-// ========================================
-
 router.get("/", (req, res) => {
 
     const sql = "SELECT * FROM skills";
